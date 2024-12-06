@@ -10,6 +10,9 @@ noise_rate, noise_data = wav.read('./AudioSource/Noisy.wav')
 if len(noise_data.shape) > 1:
     noise_data = noise_data.mean(axis=1)
 
+# 2. 将原来的音频信号处理成512长度的切片
+
+
 # 计算噪声频谱模型
 frame_size = 1024
 overlap = 512
@@ -78,8 +81,10 @@ freqs = np.linspace(0, rate, frame_size)
 plt.figure(figsize=(12,6))
 plt.plot(freqs[:frame_size//2], 20*np.log10(original_spectrum_mean[:frame_size//2]), label='Original')
 plt.plot(freqs[:frame_size//2], 20*np.log10(denoised_spectrum_mean[:frame_size//2]), label='Processed')
-plt.xlabel('频率 (Hz)')
-plt.ylabel('幅度 (dB)')
-plt.title('降噪前后频谱对比')
+plt.plot(freqs[:frame_size//2], 20*np.log10(noise_spectrum[:frame_size//2]), label='noise')
+
+plt.xlabel('frequence spectrum (Hz)')
+plt.ylabel('Gain (dB)')
+plt.title('frequence diff')
 plt.legend()
 plt.show()
